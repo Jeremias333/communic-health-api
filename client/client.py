@@ -130,7 +130,7 @@ def adc_coments(indice):
 	print(menu)
 
 	comentario = input("\n\nDigite um comentário sobre (ex: Gostei muito do lugar, bem organizado...): ").strip()
-	comentario += (lista["lista_coments"]+separator+comentario)
+	comentario = (lista["lista_coments"]+separator+comentario)
 
 	cursor.execute(f"UPDATE centers SET lista_coments = '{comentario}' WHERE indice = '{indice}'")
 	con.commit()
@@ -150,19 +150,18 @@ def ver_coments(indice):
 		"lista_coments" : ""
 	}
 
-	
-
 	cursor.execute(f"SELECT * FROM centers WHERE indice == {indice}")
 
 	for linha in cursor.fetchall():
 		lista["indice"] = linha[0]
 		lista["nome"] = linha[1]
 		lista["lista_coments"] = linha[4]
+	
+	print(lista["lista_coments"])
 
 	comentarios = lista["lista_coments"].split("$#&*$")
 
 	nome_indice = lista["nome"]
-	separator = "$#&*$"
 
 	menu = f"Você escolheu VISUALIZAR os comentários a respeito do centro de saúde: {nome_indice}\n"
 
@@ -171,7 +170,7 @@ def ver_coments(indice):
 	while opcao < 0 or opcao > 0:
 		clear()
 		print(menu)
-		for linha in comentarios:
+		for linha in comentarios[1:]:
 			print("\n-> "+linha)
 		opcao = int(input("\n\nPara voltar digite 0 (zero): "))
 
