@@ -1,6 +1,9 @@
 import os
-
+import sqlite3
 #request
+
+con = sqlite3.connect("banco.db")#cria a base/banco de dados caso não exista.
+cursor = con.cursor()#abrindo conexao
 
 def start():
 	clear()
@@ -16,12 +19,18 @@ def start():
 
 def list_centers():
 	# pegariamos a lista de nomes e os indices de cada centro cadastrado
+
 	lista = {
-		"nome": ['Getúlio Vargas', 'Posto da Vila União', 'Outros'],
-		"indice": [0, 1, 2]
+		"indice": [],
+		"nome": []
 	}
 
-	clear()
+	cursor.execute("SELECT indice,nome FROM centers;")
+
+	# print(type(cursor.fetchall))
+	for linha in cursor.fetchall():
+		lista["indice"].append(linha[0])
+		lista["nome"].append(linha[1])
 
 	menu_centers = "Escolha um centro médico cadastrado:\n\n"
 	contador = 0
@@ -31,7 +40,7 @@ def list_centers():
 		atual_indice = lista["indice"][indice]
 		atual_nome = lista["nome"][indice]
 		escolhas += f"{atual_indice} - {atual_nome}\n"
-
+	escolhas += "\n0 - Sair"
 	menu_centers += escolhas
 	
 	opcao = -1
@@ -43,6 +52,8 @@ def list_centers():
 		print(menu_centers)
 		opcao = int(input("Escolha um centro de saúde (ex: 1): "))
 
+		if opcao == 0:
+			os.exit()
 	info_center(opcao)
 
 def info_center(indice):
@@ -53,18 +64,28 @@ def info_center(indice):
 	# - Nota de avaliação
 	# - Lista de comentários
 
-	valores = {
+	lista = {
 		"indice": 0,
 		"nome": "",
-		"nota_avaliacao": 0.0,
-		"lista_coments": []
+		"localizacao": "",
+		"nota_avaliacao": 0.0
 	}
 
-	infos = (""
-		""
-		"\n\n")
+	cursor.execute(f"SELECT * FROM centers WHERE indice == {indice}")
 
-	escolha = "1 - Ver comentários \n2 - Adicionar comentário \n3 - Voltar\n\n"
+	for linha in cursor.fetchall():
+		lista["indice"] = linha[0]
+		lista["nome"] = linha[1]
+		lista["nota_avaliacao"] = linha[2]
+		lista["localizacao"] = linha[3]
+
+	print(lista)
+	infos = "[INFORMAÇÕES]\n\n"+str(lista["indice"])+" - "+str(lista["nome"])
+	infos += "\nLocalização: "+str(lista["localizacao"])
+	infos += "\nAvaliação: "+str(lista["nota_avaliacao"])
+
+
+	escolha = "\n1 - Ver comentários \n2 - Adicionar comentário \n3 - Voltar\n\n"
 
 	opcao = -1
 
@@ -78,9 +99,9 @@ def info_center(indice):
 		opcao = int(input("Escolha uma ação (ex: 1): "))
 
 		if opcao == 1:
-			ver_coments(valores["indice"])
+			ver_coments(lista["indice"])
 		if opcao == 2:
-			adc_coments(valores["indice"])
+			adc_coments(lista["indice"])
 		if opcao == 3:
 			list_centers()
 
@@ -88,17 +109,31 @@ def info_center(indice):
 def adc_coments(indice):
 	clear()
 	# pesquisar nome do escolhido
+	lista = {
+		"indice": 0,
+		"nome": "",
+		"lista_coments" : ""
+	}
 
-	# print(indice)
+	cursor.execute(f"SELECT * FROM centers WHERE indice == {indice}")
 
-	nome_indice = "DEFAULT"
-	
+	for linha in cursor.fetchall():
+		lista["indice"] = linha[0]
+		lista["nome"] = linha[1]
+		lista["lista_coments"] = linha[4]
+
+	nome_indice = lista["nome"]
+	separator = "$#&*$"
+
 	menu = f"Você escolheu fazer um comentário sobre o centro de saúde: {nome_indice}"
 
 	print(menu)
 
-	comentario = input("\n\nDigite um comentário sobre (ex: Gostei muito do lugar, bem organizado...): ")
-	comentario += (comentario+"\n\n")
+	comentario = input("\n\nDigite um comentário sobre (ex: Gostei muito do lugar, bem organizado...): ").strip()
+	comentario += (lista["lista_coments"]+separator+comentario)
+
+	cursor.execute(f"UPDATE centers SET lista_coments = '{comentario}' WHERE indice = '{indice}'")
+	con.commit()
 
 	clear()
 	print("Comentário adicionado com sucesso: ")
@@ -109,13 +144,35 @@ def adc_coments(indice):
 
 def ver_coments(indice):
 	#baseado no indice carregar todos comentários do centro de saúde.
-	comentarios = "aaaa"
+	lista = {
+		"indice": 0,
+		"nome": "",
+		"lista_coments" : ""
+	}
+
+	
+
+	cursor.execute(f"SELECT * FROM centers WHERE indice == {indice}")
+
+	for linha in cursor.fetchall():
+		lista["indice"] = linha[0]
+		lista["nome"] = linha[1]
+		lista["lista_coments"] = linha[4]
+
+	comentarios = lista["lista_coments"].split("$#&*$")
+
+	nome_indice = lista["nome"]
+	separator = "$#&*$"
+
+	menu = f"Você escolheu VISUALIZAR os comentários a respeito do centro de saúde: {nome_indice}\n"
 
 	opcao = 1
 
 	while opcao < 0 or opcao > 0:
 		clear()
-		print(comentarios)
+		print(menu)
+		for linha in comentarios:
+			print("\n-> "+linha)
 		opcao = int(input("\n\nPara voltar digite 0 (zero): "))
 
 	info_center(indice)
