@@ -1,6 +1,6 @@
 import sqlite3
 
-con = sqlite3.connect("../client/banco.db")#cria a base/banco de dados caso não exista.
+con = sqlite3.connect("banco.db")#cria a base/banco de dados caso não exista.
 cursor = con.cursor()#abrindo conexao
 
 def initial():
