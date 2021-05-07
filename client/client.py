@@ -2,8 +2,8 @@ import os
 import sqlite3
 #request
 
-con = sqlite3.connect("banco.db")#cria a base/banco de dados caso não exista.
-cursor = con.cursor()#abrindo conexao
+# con = sqlite3.connect("banco.db")#cria a base/banco de dados caso não exista.
+# cursor = con.cursor()#abrindo conexao
 
 def start():
 	clear()
