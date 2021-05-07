@@ -1,4 +1,4 @@
 pip3 install fastapi
 pip3 install uvicorn[standard]
 
-uvicorn server:app --host 0.0.0.0 --port 80 --reload
+uvicorn server:app --host 0.0.0.0 --port 8000 --reload
