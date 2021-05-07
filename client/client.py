@@ -1,21 +1,36 @@
 import os
 import sqlite3
-#request
+import requests
+import time
+import json
 
 # con = sqlite3.connect("banco.db")#cria a base/banco de dados caso não exista.
 # cursor = con.cursor()#abrindo conexao
+host = "http://127.0.0.1:8000"
 
 def start():
 	clear()
 	menu_principal = ("Bem vindos ao ComunicHealth, o que deseja fazer: \n\n"
 			"1 - Lista de centros de saúde\n"
-			"2 - Ajuda\n")
+			"2 - Ajuda\n"
+			"0 - Sair \n")
 
 	print(menu_principal)
 	opcao = int(input("Escolha uma opção (ex: 1): "))
 
 	if opcao == 1:
 		list_centers()
+	if opcao == 2:
+		clear()
+		print("Ainda está sendo desenvolvido...")
+		time.sleep(3)
+		start()
+	if opcao == 0:
+		clear()
+		print("Obrigado por utilizar o CommunicHealth <3")
+		exit()
+	else:
+		start()
 
 def list_centers():
 	# pegariamos a lista de nomes e os indices de cada centro cadastrado
@@ -25,35 +40,41 @@ def list_centers():
 		"nome": []
 	}
 
-	cursor.execute("SELECT indice,nome FROM centers;")
+	# cursor.execute("SELECT indice,nome FROM centers;")
+	url = host+"/get/vars/indice/nome"
+	res = requests.get(url)
+	obj = res.json()
 
 	# print(type(cursor.fetchall))
-	for linha in cursor.fetchall():
-		lista["indice"].append(linha[0])
-		lista["nome"].append(linha[1])
+	for index in range(len(obj["indices"])):
+		lista["indice"].append(obj["indices"][index])
+		lista["nome"].append(obj["nomes"][index])
 
 	menu_centers = "Escolha um centro médico cadastrado:\n\n"
 	contador = 0
 	escolhas = ""
 
 	for indice in range(len(lista["indice"])):
+		clear()
 		atual_indice = lista["indice"][indice]
 		atual_nome = lista["nome"][indice]
 		escolhas += f"{atual_indice} - {atual_nome}\n"
-	escolhas += "\n0 - Sair"
+	escolhas += "\n0 - Voltar"
 	menu_centers += escolhas
 	
 	opcao = -1
 
 	# print(lista["indice"][-1])
 
-	while opcao < 0 or opcao > lista["indice"][-1]+1:
+	while opcao < 0 or opcao > lista["indice"][-1]:
 		clear()
 		print(menu_centers)
 		opcao = int(input("Escolha um centro de saúde (ex: 1): "))
 
 		if opcao == 0:
-			os.exit()
+			clear()
+			print("Obrigado por utilizar o CommunicHealth <3")
+			start()
 	info_center(opcao)
 
 def info_center(indice):
@@ -71,15 +92,21 @@ def info_center(indice):
 		"nota_avaliacao": 0.0
 	}
 
-	cursor.execute(f"SELECT * FROM centers WHERE indice == {indice}")
 
-	for linha in cursor.fetchall():
-		lista["indice"] = linha[0]
-		lista["nome"] = linha[1]
-		lista["nota_avaliacao"] = linha[2]
-		lista["localizacao"] = linha[3]
+	url = host+"/get/vars/indice/nome/localizacao/avaliacao/"+str(indice)
+	res = requests.get(url)
+	obj = res.json()
 
-	print(lista)
+	# cursor.execute(f"SELECT * FROM centers WHERE indice == {indice}")
+
+	# print(obj)
+	for linha in range(len(obj["indices"])):
+		lista["indice"] = obj["indices"][0]
+		lista["nome"] = obj["nomes"][0]
+		lista["nota_avaliacao"] = obj["nota_avaliacao"][0]
+		lista["localizacao"] = obj["localizacao"][0]
+
+	# print(lista)
 	infos = "[INFORMAÇÕES]\n\n"+str(lista["indice"])+" - "+str(lista["nome"])
 	infos += "\nLocalização: "+str(lista["localizacao"])
 	infos += "\nAvaliação: "+str(lista["nota_avaliacao"])
@@ -115,12 +142,13 @@ def adc_coments(indice):
 		"lista_coments" : ""
 	}
 
-	cursor.execute(f"SELECT * FROM centers WHERE indice == {indice}")
+	url = host+"/get/vars/indice/nome/comentarios/"+str(indice)
+	res = requests.get(url)
+	obj = res.json()
 
-	for linha in cursor.fetchall():
-		lista["indice"] = linha[0]
-		lista["nome"] = linha[1]
-		lista["lista_coments"] = linha[4]
+	lista["indice"] = obj["indices"][0]
+	lista["nome"] = obj["nomes"][0]
+	lista["lista_coments"] = obj["lista_coments"][0]
 
 	nome_indice = lista["nome"]
 	separator = "$#&*$"
@@ -132,15 +160,24 @@ def adc_coments(indice):
 	comentario = input("\n\nDigite um comentário sobre (ex: Gostei muito do lugar, bem organizado...): ").strip()
 	comentario = (lista["lista_coments"]+separator+comentario)
 
-	cursor.execute(f"UPDATE centers SET lista_coments = '{comentario}' WHERE indice = '{indice}'")
-	con.commit()
+	send_obj = {
+		"indice": indice,
+		"lista_coments": comentario
+	}
+	url = host+"/add/vars/comentarios"
+	res = requests.post(url, data=json.dumps(send_obj))
 
+	print(res)
+	# cursor.execute(f"UPDATE centers SET lista_coments = '{comentario}' WHERE indice = '{indice}'")
+	# con.commit()
+	time.sleep(4)
 	clear()
+	
 	print("Comentário adicionado com sucesso: ")
+	time.sleep(2)
 
 	info_center(indice)
 
-	# popular comentário
 
 def ver_coments(indice):
 	#baseado no indice carregar todos comentários do centro de saúde.
@@ -150,14 +187,15 @@ def ver_coments(indice):
 		"lista_coments" : ""
 	}
 
-	cursor.execute(f"SELECT * FROM centers WHERE indice == {indice}")
+	url = host+"/get/vars/indice/nome/comentarios/"+str(indice)
+	res = requests.get(url)
+	obj = res.json()
 
-	for linha in cursor.fetchall():
-		lista["indice"] = linha[0]
-		lista["nome"] = linha[1]
-		lista["lista_coments"] = linha[4]
-	
-	print(lista["lista_coments"])
+	# cursor.execute(f"SELECT * FROM centers WHERE indice == {indice}")
+
+	lista["indice"] = obj["indices"][0]
+	lista["nome"] = obj["nomes"][0]
+	lista["lista_coments"] = obj["lista_coments"][0]
 
 	comentarios = lista["lista_coments"].split("$#&*$")
 
