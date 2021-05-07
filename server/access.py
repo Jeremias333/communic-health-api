@@ -30,7 +30,7 @@ def get_id_name():
 	
 	with sqlite3.connect("banco.db") as con:
 		cursor = con.cursor()
-		cursor.execute("SELECT * FROM centers;")
+		cursor.execute("SELECT indice,nome FROM centers;")
 
 		for linha in cursor.fetchall():
 			obj["indices"].append(linha[0])
@@ -38,18 +38,17 @@ def get_id_name():
 
 	return obj
 
-def get_id_name_localization_rate():
+def get_id_name_localization_rate(indice = 0):
 	obj = {
 			"indices": [],
 			"nomes": [],
 			"nota_avaliacao": [],
-			"localizacao": [],
-			"lista_coments": []
+			"localizacao": []
 		}
 	
 	with sqlite3.connect("banco.db") as con:
 		cursor = con.cursor()
-		cursor.execute("SELECT * FROM centers;")
+		cursor.execute(f"SELECT indice,nome,localizacao,nota_avaliacao FROM centers where indice == '{indice}';")
 
 		for linha in cursor.fetchall():
 			obj["indices"].append(linha[0])
@@ -59,7 +58,7 @@ def get_id_name_localization_rate():
 
 	return obj
 
-def get_id_name_coments():
+def get_id_name_coments(indice = 0):
 	obj = {
 			"indices": [],
 			"nomes": [],
@@ -68,19 +67,19 @@ def get_id_name_coments():
 	
 	with sqlite3.connect("banco.db") as con:
 		cursor = con.cursor()
-		cursor.execute("SELECT * FROM centers;")
+		cursor.execute(f"SELECT indice,nome,lista_coments FROM centers where indice == '{indice}';")
 
 		for linha in cursor.fetchall():
 			obj["indices"].append(linha[0])
 			obj["nomes"].append(linha[1])
-			obj["lista_coments"].append(linha[4])
+			obj["lista_coments"].append(linha[2])
 
 	return obj
 
 def add_comments(obj=None):
 	obj_local = {
 		"indice": obj["indice"],		
-		"comentario": obj["comentario"]
+		"comentario": obj["lista_coments"]
 	}
 
 	indice = obj_local["indice"]
@@ -91,7 +90,7 @@ def add_comments(obj=None):
 
 		cursor.execute(f"UPDATE centers SET lista_coments = '{comentario}' WHERE indice = '{indice}'")
 		con.commit()
-		msg = "concluído"
+		msg = {"msg":"concluído"}
 
 		return msg
 	return {"msg":"Error"}

@@ -13,14 +13,15 @@ def get_all():
 def get_id_name():
 	return access.get_id_name()
 
-@app.get("/get/vars/indice/nome/localizacao/avaliacao")
-def get_id_name_localization_rate():
-	return access.get_id_name_localization_rate()
+@app.get("/get/vars/indice/nome/comentarios/{indice}")
+async def get_id_name_coments(indice):
+	indice = int(indice[0])
+	return access.get_id_name_coments(indice)
 
-@app.get("/get/vars/indice/nome/comentarios")
-def get_id_name_coments():
-	return access.get_id_name_coments()
-
+@app.get("/get/vars/indice/nome/localizacao/avaliacao/{indice}")
+async def get_id_name_localization_rate(indice):
+	indice = int(indice[0])
+	return access.get_id_name_localization_rate(indice)
 #data_dict = {
 #	"indice": 1,
 #	"comentario": "aaaaa"
@@ -35,3 +36,4 @@ async def add_comments(request: Request):
 	print(obj_dict)
 	print(type(obj_dict))
 	return access.add_comments(obj=obj_dict)
+
