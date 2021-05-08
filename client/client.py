@@ -4,9 +4,7 @@ import requests
 import time
 import json
 
-# con = sqlite3.connect("banco.db")#cria a base/banco de dados caso não exista.
-# cursor = con.cursor()#abrindo conexao
-host = "http://127.0.0.1:8000"
+host = "http://grupom.sagittax.org"
 
 def start():
 	clear()
@@ -40,12 +38,10 @@ def list_centers():
 		"nome": []
 	}
 
-	# cursor.execute("SELECT indice,nome FROM centers;")
 	url = host+"/get/vars/indice/nome"
 	res = requests.get(url)
 	obj = res.json()
 
-	# print(type(cursor.fetchall))
 	for index in range(len(obj["indices"])):
 		lista["indice"].append(obj["indices"][index])
 		lista["nome"].append(obj["nomes"][index])
@@ -64,8 +60,6 @@ def list_centers():
 	
 	opcao = -1
 
-	# print(lista["indice"][-1])
-
 	while opcao < 0 or opcao > lista["indice"][-1]:
 		clear()
 		print(menu_centers)
@@ -78,12 +72,6 @@ def list_centers():
 	info_center(opcao)
 
 def info_center(indice):
-	
-	# aqui vai ficar o acesso a api e retornar os dados do hospital.
-	# - Indice
-	# - Nome 
-	# - Nota de avaliação
-	# - Lista de comentários
 
 	lista = {
 		"indice": 0,
@@ -97,20 +85,15 @@ def info_center(indice):
 	res = requests.get(url)
 	obj = res.json()
 
-	# cursor.execute(f"SELECT * FROM centers WHERE indice == {indice}")
-
-	# print(obj)
 	for linha in range(len(obj["indices"])):
 		lista["indice"] = obj["indices"][0]
 		lista["nome"] = obj["nomes"][0]
 		lista["nota_avaliacao"] = obj["nota_avaliacao"][0]
 		lista["localizacao"] = obj["localizacao"][0]
 
-	# print(lista)
 	infos = "[INFORMAÇÕES]\n\n"+str(lista["indice"])+" - "+str(lista["nome"])
 	infos += "\nLocalização: "+str(lista["localizacao"])
 	infos += "\nAvaliação: "+str(lista["nota_avaliacao"])
-
 
 	escolha = "\n1 - Ver comentários \n2 - Adicionar comentário \n3 - Voltar\n\n"
 
@@ -132,10 +115,9 @@ def info_center(indice):
 		if opcao == 3:
 			list_centers()
 
-	
 def adc_coments(indice):
 	clear()
-	# pesquisar nome do escolhido
+
 	lista = {
 		"indice": 0,
 		"nome": "",
@@ -168,8 +150,7 @@ def adc_coments(indice):
 	res = requests.post(url, data=json.dumps(send_obj))
 
 	print(res)
-	# cursor.execute(f"UPDATE centers SET lista_coments = '{comentario}' WHERE indice = '{indice}'")
-	# con.commit()
+
 	time.sleep(4)
 	clear()
 	
@@ -180,7 +161,7 @@ def adc_coments(indice):
 
 
 def ver_coments(indice):
-	#baseado no indice carregar todos comentários do centro de saúde.
+
 	lista = {
 		"indice": 0,
 		"nome": "",
@@ -190,8 +171,6 @@ def ver_coments(indice):
 	url = host+"/get/vars/indice/nome/comentarios/"+str(indice)
 	res = requests.get(url)
 	obj = res.json()
-
-	# cursor.execute(f"SELECT * FROM centers WHERE indice == {indice}")
 
 	lista["indice"] = obj["indices"][0]
 	lista["nome"] = obj["nomes"][0]
