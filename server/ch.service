@@ -1,0 +1,13 @@
+#!/bin/sh -
+[Unit]
+Description="CommunicHealth API"
+
+[Service]
+WorkingDirectory=/root/communic-health-api/server/
+ExecStart=/root/venv/bin/uvicorn server:app --host 0.0.0.0 --port 80
+Restart=always
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
