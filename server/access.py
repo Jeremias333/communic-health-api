@@ -105,7 +105,7 @@ def add_user(obj=None):
 	email = obj_local["email"]
 	password = obj_local["password"]
 
-	if exists_email_username(username, email):
+	if not exists_email_username(username, email):
 		with sqlite3.connect("banco.db") as con:
 			cursor = con.cursor()
 
