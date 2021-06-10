@@ -111,7 +111,7 @@ def add_user(obj=None):
 
 			cursor.execute(f"INSERT INTO users (username, email, password) VALUES ('{username}','{email}','{password}');")
 			con.commit()
-			msg = {"msg":"login concluído"}
+			msg = {"msg":"signup concluído"}
 
 			return msg
 	else:
