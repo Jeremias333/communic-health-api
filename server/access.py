@@ -127,13 +127,9 @@ def exists_email_username(username, email):
 		cursor.execute(f"SELECT username, email FROM users;")
 		
 		for linha in cursor.fetchall():
-			db.append(linha[0])
-			db.append(linha[1])
-
-		if not db[0] == username and not db[1] == email:
-			return False
-		else:
-			return True
+			if linha[0] == username or linha[1] == email:
+				return True
+		return False
 
 def do_login(obj=None):
 	db_values = list()
