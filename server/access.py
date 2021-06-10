@@ -152,14 +152,14 @@ def do_login(obj=None):
 			db_values.append(linha[1])
 			db_values.append(linha[2])
 
-	if username == db_values[1] and password == db_values[2]:
-		obj_return = {
-			"indice": db_values[0],
-			"username": db_values[1],
-			"password": db_values[2]
-		}
-		return obj_return
-	else:
+			if username == db_values[1] and password == db_values[2]:
+				obj_return = {
+					"indice": db_values[0],
+					"username": db_values[1],
+					"password": db_values[2]
+				}
+				return obj_return
+
 		msg = {"msg":"usuario ou senha inválidos"}
 		return msg
 
