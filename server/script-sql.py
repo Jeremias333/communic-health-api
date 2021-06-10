@@ -10,7 +10,14 @@ def initial():
 		"nota_avaliacao REAL,"
 		"localizacao TEXT NOT NULL,"
 		"lista_coments TEXT);")
-	print("Tabela criada")
+	print("Tabela de centers criada")
+	cursor.execute("CREATE TABLE users("
+		"indice INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
+		"username VARCHAR,"
+		"email VARCHAR,"
+		"password VARCHAR,"
+		"favorites VARCHAR);")
+	print("Tabela de users criada")
 
 
 def insert_default():
@@ -27,7 +34,7 @@ def insert_default():
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Unidade de Pronto Atendimento Maria Esther Souto Carvalho', 5.0, 'Av. Mal. Mascarenhas de Morais, 4223 - Imbiribeira, Recife - PE, 51150-004', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('UPA IBURA - Unidade de Pronto Atendimento Pediatra Zilda Arns', 5.0, 'R. Vale do Itajaí, S/n - Ibura, Recife - PE, 51280-405', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('UPA - Unidade de Pronto Atendimento - Tipo III Torrões', 5.0, 'Av. Eng. Abdias de Carvalho, nº 30 - Torrões, Recife - PE, 50640-785', '');")
-
+	cursor.execute("INSERT INTO users (username, email, password, favorites) VALUES ('jeremias333', 'jeremais@cummunichealth.com', '123456', '[1,2,3]');")
 	con.commit()
 
 initial()

@@ -93,4 +93,76 @@ def add_comments(obj=None):
 		msg = {"msg":"concluído"}
 
 		return msg
-	return {"msg":"Error"}
+
+def add_user(obj=None):
+	obj_local = {
+		"username": obj["username"],
+		"email": obj["email"],
+		"password": obj["password"]
+	}
+
+	username = obj_local["username"]
+	email = obj_local["email"]
+	password = obj_local["password"]
+
+	if exists_email_username(username, email):
+		with sqlite3.connect("banco.db") as con:
+			cursor = con.cursor()
+
+			cursor.execute(f"INSERT INTO users (username, email, password) VALUES ('{username}','{email}','{password}';")
+			con.commit()
+			msg = {"msg":"login concluído"}
+
+			return msg
+	else:
+		msg = {"msg":"erro ao cadastrar"}
+		return msg
+
+def exists_email_username(username, email):
+	db = list()
+
+	with sqlite3.connect("banco.db") as con:
+		cursor = con.cursor()
+
+		cursor.execute(f"SELECT username, email FROM users;")
+		
+		for linha in cursor.fetchall():
+			db.append(linha[0])
+			db.append(linha[1])
+
+		if not db[0] == username and not db[1] == email:
+			return False
+		else:
+			return True
+
+def do_login(obj=None):
+	db_values = list()
+	obj_local = {
+		"username": obj["username"],
+		"password": obj["password"]
+	}
+
+	username = obj_local["username"]
+	password = obj_local["password"]
+
+	with sqlite3.connect("banco.db") as con:
+		cursor = con.cursor()
+
+		cursor.execute(f"SELECT indice, username, password FROM users;")
+		
+		for linha in cursor.fetchall():
+			db_values.append(linha[0])
+			db_values.append(linha[1])
+			db_values.append(linha[2])
+
+	if username == db_values[1] and password == db_values[2]:
+		obj_return = {
+			"indice": db_values[0],
+			"username": db_values[1],
+			"password": db_values[2]
+		}
+		return obj_return
+	else:
+		msg = {"msg":"usuario ou senha inválidos"}
+		return msg
+

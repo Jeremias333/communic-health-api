@@ -37,3 +37,16 @@ async def add_comments(request: Request):
 	print(type(obj_dict))
 	return access.add_comments(obj=obj_dict)
 
+@app.post("/signup")
+async def add_user(request: Request):
+	obj = await request.body()
+	obj_dict = json.loads(obj)
+	print(obj_dict)
+	return access.add_user(obj_dict)
+
+@app.post("/login")
+async def login(request: Request):
+	obj = await request.body()
+	obj_dict = json.loads(obj)
+	print(obj_dict)
+	return access.do_login(obj_dict)
