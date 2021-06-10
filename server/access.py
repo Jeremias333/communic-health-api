@@ -159,7 +159,7 @@ def do_login(obj=None):
 					"password": db_values[2]
 				}
 				return obj_return
-
+			db_values = list()
 		msg = {"msg":"usuario ou senha inválidos"}
 		return msg
 
