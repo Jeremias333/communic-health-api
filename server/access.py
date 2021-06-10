@@ -109,7 +109,7 @@ def add_user(obj=None):
 		with sqlite3.connect("banco.db") as con:
 			cursor = con.cursor()
 
-			cursor.execute(f"INSERT INTO users (username, email, password) VALUES ('{username}','{email}','{password}';")
+			cursor.execute(f"INSERT INTO users (username, email, password) VALUES ('{username}','{email}','{password}');")
 			con.commit()
 			msg = {"msg":"login concluído"}
 
