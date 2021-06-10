@@ -128,6 +128,7 @@ def exists_email_username(username, email):
 		
 		for linha in cursor.fetchall():
 			if linha[0] == username or linha[1] == email:
+				print(linha[0], linha[1])
 				return True
 		return False
 
