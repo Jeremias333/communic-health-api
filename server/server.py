@@ -17,6 +17,10 @@ def get_id_name():
 def get_id_name():
 	return access.get_id_name_rating()
 
+@app.get("/get/vars/address")
+def get_id_address():
+    return access.get_id_address()
+
 @app.get("/get/vars/indice/nome/comentarios/{indice}")
 async def get_id_name_coments(indice):
 	indice = int(indice)
