@@ -19,7 +19,7 @@ def get_id_name():
 
 @app.get("/get/vars/address")
 def get_id_address():
-    return access.get_id_address()
+    return access.get_id_names_address()
 
 @app.get("/get/vars/indice/nome/comentarios/{indice}")
 async def get_id_name_coments(indice):

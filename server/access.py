@@ -39,18 +39,20 @@ def get_id_name_rating():
 	
 	return obj
 
-def get_id_address():
+def get_id_name_address():
 	obj = {
 			"indices": [],
+			"nomes": [],
 			"localizacao": []
 		}
 	with sqlite3.connect("banco.db") as con:
 		cursor = con.cursor()
-		cursor.execute("SELECT indice, localizacao FROM centers;")
+		cursor.execute("SELECT indice, nome, localizacao FROM centers;")
 
 		for linha in cursor.fetchall():
 			obj["indices"].append(linha[0])
-			obj["localizacao"].append(linha[1])
+			obj["nomes"].append(linha[1])
+			obj["localizacao"].append(linha[2])
 	
 	return obj
 
