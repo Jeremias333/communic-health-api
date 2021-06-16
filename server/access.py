@@ -30,7 +30,7 @@ def get_id_name_rating():
 		}
 	with sqlite3.connect("banco.db") as con:
 		cursor = con.cursor()
-		cursor.execute("SELECT indices, nomes, nota_avalicao FROM centers ORDER BY nota_avalicao DESC;")
+		cursor.execute("SELECT indice, nome, nota_avalicao FROM centers ORDER BY nota_avalicao DESC;")
 
 		for linha in cursor.fetchall():
 			obj["indices"].append(linha[0])
