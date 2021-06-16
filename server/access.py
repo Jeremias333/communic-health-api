@@ -16,8 +16,8 @@ def get_all():
 		for linha in cursor.fetchall():
 			obj["indices"].append(linha[0])
 			obj["nomes"].append(linha[1])
-			obj["nota_avaliacao"].append(linha[3])
-			obj["localizacao"].append(linha[2])
+			obj["nota_avaliacao"].append(linha[2])
+			obj["localizacao"].append(linha[3])
 			obj["lista_coments"].append(linha[4])
 
 	return obj
