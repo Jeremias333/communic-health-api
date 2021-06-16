@@ -22,6 +22,23 @@ def get_all():
 
 	return obj
 
+def get_id_name_rating():
+	obj = {
+			"indices": [],
+			"nomes": [],
+			"nota_avaliacao": []
+		}
+	with sqlite3.connect("banco.db") as con:
+		cursor = con.cursor()
+		cursor.execute("SELECT indices, nomes, nota_avalicao FROM centers ORDER BY nota_avalicao DESC;")
+
+		for linha in cursor.fetchall():
+			obj["indices"].append(linha[0])
+			obj["nomes"].append(linha[1])
+			obj["nota_avaliacao"].append(linha[2])
+	
+	return obj
+
 def get_id_name():
 	obj = {
 			"indices": [],
