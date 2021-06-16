@@ -13,6 +13,10 @@ def get_all():
 def get_id_name():
 	return access.get_id_name()
 
+@app.get("/get/vars/rating")
+def get_id_name():
+	return access.get_id_name_rating()
+
 @app.get("/get/vars/indice/nome/comentarios/{indice}")
 async def get_id_name_coments(indice):
 	indice = int(indice)
