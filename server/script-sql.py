@@ -35,7 +35,7 @@ def insert_default():
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('UPA IBURA - Unidade de Pronto Atendimento Pediatra Zilda Arns', 5.0, 'R. Vale do Itajaí, S/n - Ibura, Recife - PE, 51280-405', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('UPA - Unidade de Pronto Atendimento - Tipo III Torrões', 5.0, 'Av. Eng. Abdias de Carvalho, nº 30 - Torrões, Recife - PE, 50640-785', '');")
 	
- 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Hospital Correia Picanço', 5.0, 'Rua Padre Roma, 149 Tamarineira Recife - PE', '');")
+	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Hospital Correia Picanço', 5.0, 'Rua Padre Roma, 149 Tamarineira Recife - PE', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Hospital Geral de Areias', 5.0, 'Avenida Recife, 810 - Estância Recife - PE', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Hospital Colônia Professor Alcides Codeceira', 5.0, 'Avenida Barão de Vera Cruz, S/N Cruz de Rebouças Igarassu - PE', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Hospital Jaboatão Prazeres', 5.0, 'Rua Recife, S/N Cajueiro Seco Jaboatão dos Guararapes - PE', '');")
@@ -95,7 +95,7 @@ def insert_default():
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('US 113 CS DR ARISTARCO AZEVEDO', 5.0, 'RUA BAHIA - 29, CEP: 51250370 Boa Vista - Recife', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('US 138 USF DR LUIZ WILSOM', 5.0, 'RUA CHA DE ALEGRIA - S/N, CEP: 52211130 Boa Vista - Recife', '');")
 	
- 	cursor.execute("INSERT INTO users (username, email, password, favorites) VALUES ('jeremias333', 'jeremais@cummunichealth.com', '123456', '[1,2,3]');")
+	cursor.execute("INSERT INTO users (username, email, password, favorites) VALUES ('jeremias333', 'jeremais@cummunichealth.com', '123456', '[1,2,3]');")
 	con.commit()
 
 initial()
