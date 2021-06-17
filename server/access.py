@@ -179,18 +179,20 @@ def do_login(obj=None):
 	with sqlite3.connect("banco.db") as con:
 		cursor = con.cursor()
 
-		cursor.execute(f"SELECT indice, username, password FROM users;")
+		cursor.execute(f"SELECT indice, username, password, email FROM users;")
 		
 		for linha in cursor.fetchall():
 			db_values.append(linha[0])
 			db_values.append(linha[1])
 			db_values.append(linha[2])
+			db_values.append(linha[3])
 
 			if username == db_values[1] and password == db_values[2]:
 				obj_return = {
 					"indice": db_values[0],
 					"username": db_values[1],
-					"password": db_values[2]
+					"password": db_values[2],
+					"email": db_values[3]
 				}
 				return obj_return
 			db_values = list()
