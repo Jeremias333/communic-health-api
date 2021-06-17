@@ -77,18 +77,21 @@ def get_id_name_localization_rate(indice = 0):
 			"indices": [],
 			"nomes": [],
 			"nota_avaliacao": [],
-			"localizacao": []
+			"comentarios": [],
+			"localizacao": [],
 		}
 	
 	with sqlite3.connect("banco.db") as con:
 		cursor = con.cursor()
-		cursor.execute(f"SELECT indice,nome,localizacao,nota_avaliacao FROM centers where indice == '{indice}';")
+		cursor.execute(f"SELECT indice,nome,localizacao,nota_avaliacao,lista_coments FROM centers where indice == '{indice}';")
 
 		for linha in cursor.fetchall():
 			obj["indices"].append(linha[0])
 			obj["nomes"].append(linha[1])
-			obj["nota_avaliacao"].append(linha[3])
 			obj["localizacao"].append(linha[2])
+			obj["nota_avaliacao"].append(linha[3])
+			obj["comentarios"].append(linha[4])
+			
 
 	return obj
 
