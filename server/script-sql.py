@@ -41,7 +41,6 @@ def insert_default():
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Hospital Jaboatão Prazeres', 5.0, 'Rua Recife, S/N Cajueiro Seco Jaboatão dos Guararapes - PE', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Hospital Metropolitano Norte – Miguel Arraes de Alencar', 5.0, 'Estrada da Fazendinha, S/N Jaguaribe Paulista - PE', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Hospital Metropolitano Oeste – Pelópidas Silveira', 5.0, 'BR 232, Km 06 Curado Recife - PE', '');")
-	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Hospital Metropolitano Sul – Dom Hélder Câmara', 5.0, 'BR 101 Sul - Km 28 Cabo de Santo Agostinho - PE', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Hospital Otávio de Freitas', 5.0, 'Rua Aprígio Guimarães, S/N - Tejipió Recife - PE', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Hospital Psiquiátrico Ulysses Pernambucano', 5.0, 'Avenida Rosa e Silva, 2.130 Tamarineira Recife - PE', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('UPA Olinda – Gregório Lourenço Bezerra', 5.0, 'Rodovia PE15 – Avenida Joaquim Nabuco, S/N, Cidade Tabajara – Olinda/PE', '');")
