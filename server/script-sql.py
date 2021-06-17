@@ -44,7 +44,6 @@ def insert_default():
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Hospital Otávio de Freitas', 5.0, 'Rua Aprígio Guimarães, S/N - Tejipió Recife - PE', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('Hospital Psiquiátrico Ulysses Pernambucano', 5.0, 'Avenida Rosa e Silva, 2.130 Tamarineira Recife - PE', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('UPA Olinda – Gregório Lourenço Bezerra', 5.0, 'Rodovia PE15 – Avenida Joaquim Nabuco, S/N, Cidade Tabajara – Olinda/PE', '');")
-	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('UPA Igarassu – Honorata de Queiroz Galvão', 5.0, 'Rodovia BR-101Norte, KM47, Centro – Igarassu/PE', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('UPA Paulista – Geraldo Pinho Alves', 5.0, ' Estrada do Frio, 1000 – Aurora – Jardim Paulista - Paulista/PE', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('UPA Imbiribeira – Maria Esther Souto Carvalho', 5.0, 'Avenida Mascarenhas de Moraes, ao lado do 4.202, Imbiribeira – Recife/PE', '');")
 	cursor.execute("INSERT INTO centers (nome, nota_avaliacao, localizacao, lista_coments) VALUES ('UPA São Lourenço da Mata – Professor Fernando Figueira', 5.0, 'Avenida Dr. Francisco Correia, 2.009, Pixete – São Lourenço da Mata/PE', '');")
